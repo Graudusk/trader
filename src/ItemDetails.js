@@ -7,6 +7,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import InfoIcon from '@material-ui/icons/Info';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import StorageIcon from '@material-ui/icons/Storage';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -68,7 +69,7 @@ class Items extends Component {
         };
 
         this.errors = null;
-        if (event) {
+        if (event && that.state.quantity > 0) {
             // let formData = new FormData(this.el);
             // console.log(itemData);
             fetch("http://localhost:1338/item/buy", {
@@ -101,8 +102,8 @@ class Items extends Component {
                 }).catch((err) => {
                     console.log(err);
                 });
-            event.preventDefault();
         }
+        event.preventDefault();
     }
 
     render() {
@@ -122,16 +123,16 @@ class Items extends Component {
                         <Avatar>
                             <AttachMoneyIcon/>
                         </Avatar>
-                        <ListItemText primary={ this.state.item.price } />
+                        <ListItemText primary={ this.state.item.price + " SEK" } />
                     </ListItem>
                     <ListItem>
                         <Avatar>
                             <StorageIcon/>
                         </Avatar>
-                        <ListItemText primary={ this.state.item.quantity } />
+                        <ListItemText primary={ this.state.item.quantity + " pcs." } />
                     </ListItem>
                 </List>
-                <p>Buy item</p>
+                <h2>Buy item</h2>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
                         id="standard-quantity-input"
@@ -144,9 +145,10 @@ class Items extends Component {
                         fullWidth={true}
                         value={this.state.quantity}
                     />
-                    <Divider />
                     <Button type="submit" variant="contained" color="primary">
-                      Buy
+
+                        <ShoppingCartIcon/>
+                        &nbsp;&nbsp;Buy
                     </Button>
                 </form>
             </main>

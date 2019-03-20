@@ -121,10 +121,22 @@ class Items extends Component {
                         <Avatar>
                             <AttachMoneyIcon/>
                         </Avatar>
-                        <ListItemText primary={ this.state.user.balance } />
+                        <ListItemText primary={ this.state.user.balance + " SEK" } />
                     </ListItem>
+
+                    {this.state.user.stock !== 0 && (
+                        <ListItem>
+                            <p>
+                            <Button href="/stockpile" variant="extendedFab" color="primary">
+                                <StorageIcon/>
+                                &nbsp;&nbsp;See stockpile ({this.state.user.stock})
+                            </Button>
+                            </p>
+                        </ListItem>
+                    )}
                 </List>
-                <p>Deposit money</p>
+
+                <h2>Deposit money</h2>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
                         id="standard-amount-input"
@@ -139,7 +151,8 @@ class Items extends Component {
                     />
                     <br/>
                     <Button type="submit" variant="contained" color="primary">
-                      Deposit
+                        <AttachMoneyIcon/>
+                        Deposit
                     </Button>
                 </form>
             </main>

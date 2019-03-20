@@ -40,7 +40,7 @@ class Items extends Component {
                 let listItems = result.data.map((item) =>
                     <ListItem key={item.id} button>
                     <Link to={"/item/details/" + item.id}>
-                        <ListItemText primary={item.name} secondary={item.price + " kr"} />
+                        <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
                     </Link>
                     </ListItem>
                 );

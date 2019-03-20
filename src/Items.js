@@ -3,6 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import ButtonAppBar from './ButtonAppBar.js';
 
 const styles = theme => ({
     root: {
@@ -65,11 +66,14 @@ class Items extends Component {
 
     render() {
         return (
+      <div>
+            <ButtonAppBar site="Items" />
             <main>
         <h1>Items</h1>
         <List>{this.state.items}</List>
         <p>{ this.state.message }</p>
       </main>
+      </div>
         );
     }
 }

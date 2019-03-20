@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import ButtonAppBar from './ButtonAppBar.js';
 
 class Login extends Component {
     constructor(props) {
@@ -80,6 +81,8 @@ class Login extends Component {
 
     render() {
         return (
+      <div>
+            <ButtonAppBar site="Items" />
             <main>
             <h2>Login</h2>
             <form onSubmit={this.handleSubmit}>
@@ -124,6 +127,7 @@ class Login extends Component {
                 {/*<input type="submit" value="Submit" />*/}
             </form>
         </main>
+        </div>
 
 
         );

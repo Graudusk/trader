@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ButtonAppBar from './ButtonAppBar.js';
 
 class Home extends Component {
   constructor(props) {
@@ -25,10 +26,13 @@ class Home extends Component {
 
   render() {
     return (
+      <div>
+            <ButtonAppBar site="Home" />
       <main>
-        <h1>Home</h1>
+        {/*<h1>Home</h1>*/}
         <p>{ this.state.message }</p>
       </main>
+      </div>
     );
   }
 }

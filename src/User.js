@@ -7,17 +7,21 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import InfoIcon from '@material-ui/icons/Info';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import StorageIcon from '@material-ui/icons/Storage';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import ButtonAppBar from './ButtonAppBar.js';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 class Items extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: {},
-            amount: 0
+            amount: 0,
+            balance: 0
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -70,7 +74,7 @@ class Items extends Component {
             // let formData = new FormData(this.el);
             // console.log(userData);
             fetch("http://localhost:1338/balance", {
-            // fetch('https://trader-api.graudusk.me/login', {
+                    // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,21 +89,9 @@ class Items extends Component {
                     return response.json();
                 })
                 .then(function(result) {
-                    // this.setState({
-                    //     [email]: result.data.user.email,
-                    //     [token]: result.data.user.token
-                    // });
-                    // router.go('/');
-                    // if (result.status == 200) {
-                    // that.$router.push('/');
-                    console.log(result.balance)
-                    that.setState({
-                        ["user"]["balance"]: that.state.user.balance + result.balance
-                    });
+                    that.state.user.balance = parseInt(that.state.user.balance) + parseInt(result.data.balance);
 
                     that.props.history.push('/user');
-                    // that.forceUpdate()
-                    // }
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -109,9 +101,22 @@ class Items extends Component {
 
     render() {
         return (
+            <div>
+            <ButtonAppBar site={"User"} />
             <main>
-                <p>{this.state.user.email}</p>
                 <List>
+                    <ListItem>
+                        <Avatar>
+                            <PersonOutlineIcon/>
+                        </Avatar>
+                        <ListItemText primary={ this.state.user.name } />
+                    </ListItem>
+                    <ListItem>
+                        <Avatar>
+                            <AlternateEmailIcon/>
+                        </Avatar>
+                        <ListItemText primary={ this.state.user.email } />
+                    </ListItem>
                     <ListItem>
                         <Avatar>
                             <AttachMoneyIcon/>
@@ -129,15 +134,16 @@ class Items extends Component {
                         // autoComplete="current-email"
                         margin="normal"
                         onChange={this.handleInputChange}
-                        fullWidth={false}
+                        fullWidth={true}
                         value={this.state.amount}
                     />
-                    <Divider />
+                    <br/>
                     <Button type="submit" variant="contained" color="primary">
                       Deposit
                     </Button>
                 </form>
             </main>
+            </div>
         );
     }
 }

@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import ButtonAppBar from './ButtonAppBar.js';
 
 class Items extends Component {
     constructor(props) {
@@ -106,6 +107,8 @@ class Items extends Component {
 
     render() {
         return (
+      <div>
+            <ButtonAppBar site="Item details" />
             <main>
                 <h2>{this.state.item.name}</h2>
                 <List>
@@ -138,7 +141,7 @@ class Items extends Component {
                         // autoComplete="current-email"
                         margin="normal"
                         onChange={this.handleInputChange}
-                        fullWidth={false}
+                        fullWidth={true}
                         value={this.state.quantity}
                     />
                     <Divider />
@@ -147,6 +150,7 @@ class Items extends Component {
                     </Button>
                 </form>
             </main>
+            </div>
         );
     }
 }

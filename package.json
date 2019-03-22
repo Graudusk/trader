@@ -6,7 +6,10 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "chart.js": "^2.8.0",
     "react": "^16.8.4",
+    "react-chartjs": "^1.2.0",
+    "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.4.0-beta.8",
     "react-scripts": "^2.1.8"

@@ -46,8 +46,11 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
+          <MenuItem onClick={this.handleClose}><Link to="/">Home</Link></MenuItem>
+          {token !== null && (
           <MenuItem onClick={this.handleClose}><Link to="/items">Items</Link></MenuItem>
-          {this.state.token !== null && (
+          )}
+          {token !== null && (
             <MenuItem onClick={this.handleClose}><Link to="/stockpile">Stockpile</Link></MenuItem>
           )}
         </Menu>

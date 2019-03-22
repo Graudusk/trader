@@ -40,24 +40,64 @@ class Items extends Component {
 
     componentDidMount() {
         let that = this;
+        fetch("http://localhost:1338/item/details/" + that.state.id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': window.localStorage.getItem('token')
+            }
+        })
+        // fetch("https://trader-api.graudusk.me")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(result) {
+            // console.log(listItems)
 
-        fetch("http://localhost:1338/item/details/" + this.state.id, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': window.localStorage.getItem('token')
+            let websocket = new WebSocket('ws://localhost:1338', 'json');
+            console.log("Connecting to: ws://localhost:1338");
+            // websocket = new WebSocket(url.value);
+
+            websocket.onopen = function() {
+                console.log("The websocket is now open.");
+                console.log(websocket);
+                console.log("The websocket is now open.");
+            };
+
+            websocket.onmessage = function(event) {
+                if (that.state.close) {
+                    websocket.close();
+                    return; 
                 }
-            })
-            // fetch("https://trader-api.graudusk.me")
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(result) {
-                that.setState({
-                    message: result.description,
-                    item: result.data
-                });
-                // console.log(listItems)
+                let result = JSON.parse(event.data);
+                for (let item of result) {
+                    if (parseInt(item.id) == parseInt(that.state.id)) {
+                        let tempItem = that.state.item;
+
+                        tempItem.price = item.price;
+
+                        that.setState({
+                            item: tempItem
+                        });
+                        return;
+                    }
+                }
+            }
+
+            websocket.onclose = function() {
+                console.log("The websocket is now closed.");
+                console.log(websocket);
+                console.log("Websocket is now closed.");
+            };
+
+            websocket.onerror = function() {
+                websocket.close();
+            }
+
+            that.setState({
+                message: result.description,
+                item: result.data
             });
+        });
     }
 
     handleSubmit(event) {
@@ -65,7 +105,8 @@ class Items extends Component {
         let itemData = {
             item: that.state.id,
             user: window.localStorage.getItem("user"),
-            quantity: that.state.quantity
+            quantity: that.state.quantity,
+            price: that.state.item.price
         };
 
         this.errors = null;

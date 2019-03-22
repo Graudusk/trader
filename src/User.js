@@ -10,6 +10,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
@@ -127,10 +128,10 @@ class Items extends Component {
                     {this.state.user.stock !== 0 && (
                         <ListItem>
                             <p>
-                            <Button href="/stockpile" variant="extendedFab" color="primary">
+                            <Fab href="/stockpile" variant="extended" color="primary">
                                 <StorageIcon/>
                                 &nbsp;&nbsp;See stockpile ({this.state.user.stock})
-                            </Button>
+                            </Fab>
                             </p>
                         </ListItem>
                     )}

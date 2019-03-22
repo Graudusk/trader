@@ -82,9 +82,8 @@ class Login extends Component {
     render() {
         return (
       <div>
-            <ButtonAppBar site="Items" />
+            <ButtonAppBar site="Login" />
             <main>
-            <h2>Login</h2>
             <form onSubmit={this.handleSubmit}>
                 {/*<label>
                     Email:

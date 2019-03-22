@@ -24,8 +24,6 @@ const styles = {
 };
 
 function ButtonAppBar(props) {
-    console.log(props)
-
     function doLogout() {
         console.log("logout")
         window.localStorage.clear();

@@ -18,12 +18,63 @@ class Items extends Component {
         super(props);
         this.state = {
             message: "",
-            items: []
+            itemsList: [],
+            close: false,
+            itemData: []
         };
+    }
+
+    componentWillUnmount() {
+        console.log("closing")
+        this.state.close = true;
+        // if(this.state.websocket) this.state.websocket.close();
     }
 
     componentDidMount() {
         let that = this;
+        let websocket = new WebSocket('ws://localhost:1338', 'json');
+        console.log("Connecting to: ws://localhost:1338");
+        // websocket = new WebSocket(url.value);
+
+        websocket.onopen = function() {
+            console.log("The websocket is now open.");
+            console.log(websocket);
+            console.log("The websocket is now open.");
+        };
+
+        websocket.onmessage = function(event) {
+            if (that.state.close) {
+                websocket.close();
+                return;
+            }
+            console.log("Receiving stock prices");
+            let result = JSON.parse(event.data);
+            let tempData = that.state.itemData;
+            for (let item of result) {
+                console.log(item)
+            }
+            let listItems = that.state.itemData.map((item) =>
+                <ListItem key={item.id} button>
+                    <Link to={"/item/details/" + item.id}>
+                        <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
+                    </Link>
+                </ListItem>
+            );
+            that.setState({
+                message: result.description,
+                itemsList: listItems
+            });
+        }
+
+        websocket.onclose = function() {
+            console.log("The websocket is now closed.");
+            console.log(websocket);
+            console.log("Websocket is now closed.");
+        };
+
+        websocket.onerror = function() {
+            websocket.close();
+        }
 
         fetch("http://localhost:1338/item/all", {
                 headers: {
@@ -37,18 +88,20 @@ class Items extends Component {
             })
             .then(function(result) {
                 console.log(result)
-                let listItems = result.data.map((item) =>
-                    <ListItem key={item.id} button>
-                    <Link to={"/item/details/" + item.id}>
-                        <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
-                    </Link>
-                    </ListItem>
-                );
-                that.setState({
-                    message: result.description,
-                    items: listItems
+                that.state.items = that.state.items.map((item) => {
+
                 });
-                console.log(listItems)
+                // let listItems = result.data.map((item) =>
+                //     <ListItem key={item.id} button>
+                //     <Link to={"/item/details/" + item.id}>
+                //         <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
+                //     </Link>
+                //     </ListItem>
+                // );
+                that.setState({
+                    itemData: result
+                });
+                // console.log(listItems)
             });
     }
 
@@ -70,7 +123,7 @@ class Items extends Component {
             <ButtonAppBar site="Items" />
             <main>
         <h1>Items</h1>
-        <List>{this.state.items}</List>
+        <List>{this.state.itemsList}</List>
         <p>{ this.state.message }</p>
       </main>
       </div>

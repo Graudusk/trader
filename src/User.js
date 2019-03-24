@@ -4,14 +4,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import InfoIcon from '@material-ui/icons/Info';
-import BusinessCenter from '@material-ui/icons/BusinessCenter';
+// import InfoIcon from '@material-ui/icons/Info';
+// import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import StorageIcon from '@material-ui/icons/Storage';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import TextField from '@material-ui/core/TextField';
+import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
@@ -129,8 +130,11 @@ class Items extends Component {
                         <ListItem>
                             <p>
                             <Fab href="/stockpile" variant="extended" color="primary">
-                                <StorageIcon/>
-                                &nbsp;&nbsp;See stockpile ({this.state.user.stock})
+                                {/*<StorageIcon/>*/}
+                                See stockpile&nbsp;&nbsp;
+                                <Badge badgeContent={this.state.user.stock} color="secondary">
+                                    <StorageIcon />
+                                </Badge>
                             </Fab>
                             </p>
                         </ListItem>

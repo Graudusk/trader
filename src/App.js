@@ -21,10 +21,10 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            ["token"]: localStorage.getItem("token") ? localStorage.getItem("token") : null,
-            ["email"]: localStorage.getItem("email") ? localStorage.getItem("email") : null
-        });
+        // this.setState({
+        //     ["token"]: localStorage.getItem("token") ? localStorage.getItem("token") : null,
+        //     ["email"]: localStorage.getItem("email") ? localStorage.getItem("email") : null
+        // });
     }
 
     doLogout() {

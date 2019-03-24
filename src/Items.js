@@ -5,14 +5,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import ButtonAppBar from './ButtonAppBar.js';
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-});
-
 class Items extends Component {
     constructor(props) {
         super(props);
@@ -26,55 +18,15 @@ class Items extends Component {
 
     componentWillUnmount() {
         console.log("closing")
-        this.state.close = true;
+        // this.state.close = true;
+        this.setState({
+            close: true
+        })
         // if(this.state.websocket) this.state.websocket.close();
     }
 
     componentDidMount() {
         let that = this;
-        let websocket = new WebSocket('ws://localhost:1338', 'json');
-        console.log("Connecting to: ws://localhost:1338");
-        // websocket = new WebSocket(url.value);
-
-        websocket.onopen = function() {
-            console.log("The websocket is now open.");
-            console.log(websocket);
-            console.log("The websocket is now open.");
-        };
-
-        websocket.onmessage = function(event) {
-            if (that.state.close) {
-                websocket.close();
-                return;
-            }
-            console.log("Receiving stock prices");
-            let result = JSON.parse(event.data);
-            let tempData = that.state.itemData;
-            for (let item of result) {
-                console.log(item)
-            }
-            let listItems = that.state.itemData.map((item) =>
-                <ListItem key={item.id} button>
-                    <Link to={"/item/details/" + item.id}>
-                        <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
-                    </Link>
-                </ListItem>
-            );
-            that.setState({
-                message: result.description,
-                itemsList: listItems
-            });
-        }
-
-        websocket.onclose = function() {
-            console.log("The websocket is now closed.");
-            console.log(websocket);
-            console.log("Websocket is now closed.");
-        };
-
-        websocket.onerror = function() {
-            websocket.close();
-        }
 
         fetch("http://localhost:1338/item/all", {
                 headers: {
@@ -87,21 +39,55 @@ class Items extends Component {
                 return response.json();
             })
             .then(function(result) {
-                console.log(result)
-                that.state.items = that.state.items.map((item) => {
-
-                });
-                // let listItems = result.data.map((item) =>
-                //     <ListItem key={item.id} button>
-                //     <Link to={"/item/details/" + item.id}>
-                //         <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
-                //     </Link>
-                //     </ListItem>
-                // );
                 that.setState({
-                    itemData: result
+                    itemData: result.data
                 });
-                // console.log(listItems)
+                let websocket = new WebSocket('ws://localhost:1338', 'json');
+                console.log("Connecting to: ws://localhost:1338");
+
+                websocket.onopen = function() {
+                    console.log("The websocket is now open.");
+                    console.log(websocket);
+                    console.log("The websocket is now open.");
+                };
+
+                websocket.onmessage = function(event) {
+                    if (that.state.close) {
+                        websocket.close();
+                        return;
+                    }
+                    console.log("Receiving stock prices");
+                    let result = JSON.parse(event.data);
+                    let tempData = that.state.itemData;
+                    for (let item of result) {
+                        for (let i in tempData) {
+                            if (tempData[i].name === item.name) {
+                                tempData[i].price = item.price;
+                            }
+                        }
+                    }
+                    let listItems = that.state.itemData.map((item) =>
+                        <ListItem key={item.id} button>
+                            <Link to={"/item/details/" + item.id}>
+                                <ListItemText primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
+                            </Link>
+                        </ListItem>
+                    );
+                    that.setState({
+                        message: result.description,
+                        itemsList: listItems
+                    });
+                }
+
+                websocket.onclose = function() {
+                    console.log("The websocket is now closed.");
+                    console.log(websocket);
+                    console.log("Websocket is now closed.");
+                };
+
+                websocket.onerror = function() {
+                    websocket.close();
+                }
             });
     }
 

@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import InfoIcon from '@material-ui/icons/Info';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import BusinessCenter from '@material-ui/icons/BusinessCenter';
-import StorageIcon from '@material-ui/icons/Storage';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import ButtonAppBar from './ButtonAppBar.js';
 import IconButton from '@material-ui/core/IconButton';
@@ -41,8 +33,8 @@ class Items extends Component {
 
     componentDidMount() {
         let that = this;
-        console.log(this.props)
 
+        // fetch("http://localhost:1338/item/all", {
         fetch("http://localhost:1338/user/stockpile/" + window.localStorage.getItem("user"), {
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,8 +46,79 @@ class Items extends Component {
                 return response.json();
             })
             .then(function(result) {
+                that.setState({
+                    itemData: result.data
+                });
+                let websocket = new WebSocket('ws://localhost:1338', 'json');
+                console.log("Connecting to: ws://localhost:1338");
+
+                websocket.onopen = function() {
+                    console.log("The websocket is now open.");
+                    console.log(websocket);
+                    console.log("The websocket is now open.");
+                };
+
+                websocket.onmessage = function(event) {
+                    if (that.state.close) {
+                        websocket.close();
+                        return;
+                    }
+                    console.log("Receiving stock prices");
+                    let result = JSON.parse(event.data);
+                    let tempData = that.state.itemData;
+                    for (let item of result) {
+                        for (let i in tempData) {
+                            console.log(tempData, item)
+                            if (tempData[i].name === item.name) {
+                                tempData[i].price = item.price;
+                            }
+                        }
+                    }
+                    that.setState({
+                        itemData: tempData
+                    });
+                    let listItems = that.state.itemData.map((item) =>
+                        <ListItem key={item.id} button>
+
+                            <IconButton href={"/item/sell/" +  + item.id} key={item.id} color="inherit" aria-label="Menu">
+                                <MonetizationOnIcon  fontSize="large"/>
+                            </IconButton>
+                            <Link to={"/item/details/" + item.itemId    }>
+                                <ListItemText inset={false} primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
+                            </Link>
+                        </ListItem>
+                    );
+                    that.setState({
+                        message: result.description,
+                        itemsList: listItems
+                    });
+                }
+
+                websocket.onclose = function() {
+                    console.log("The websocket is now closed.");
+                    console.log(websocket);
+                    console.log("Websocket is now closed.");
+                };
+
+                websocket.onerror = function() {
+                    websocket.close();
+                }
+            });
+        console.log(this.props)
+
+       /* fetch("http://localhost:1338/user/stockpile/" + window.localStorage.getItem("user"), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': window.localStorage.getItem('token')
+                }
+            })
+            // fetch("https://trader-api.graudusk.me")
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(result) {
                 console.log(result)
-                let listItems = result.data.map((item) =>   
+                let listItems = result.data.map((item) =>
                     <ListItem key={item.id} button>
 
                         <IconButton href={"/item/sell/" +  + item.id} key={item.id} color="inherit" aria-label="Menu">
@@ -67,12 +130,11 @@ class Items extends Component {
                     </ListItem>
                 );
                 that.setState({
-                    message: result.description,
-                    items: listItems,
+                    itemsList: listItems,
                     user: window.localStorage.getItem('email')
                 });
                 console.log(listItems);
-            });
+            });*/
     }
 
     sellItem(event) {
@@ -109,22 +171,26 @@ class Items extends Component {
     }
 
     render() {
-        if (this.state.items) {
-
-        return (
-      <div>
-            <ButtonAppBar site="Stockpile" />
-            <main>
-                <h1>{this.state.user}</h1>
-                <List>{this.state.items}</List>
-            </main>
-            </div>
-        );
+        if (this.state.itemsList && this.state.itemsList.length > 0) {
+            return (
+                <div>
+                    <ButtonAppBar site="Stockpile" />
+                    <main>
+                        <h1>{this.state.user}</h1>
+                        <List>{this.state.itemsList}</List>
+                    </main>
+                </div>
+            );
         }
         else {
-            return (<main>
-                <h3>No items in stockpile</h3>
-            </main>)
+            return (
+                <div>
+                    <ButtonAppBar site="Stockpile" />
+                    <main>
+                        <h3>No items in stockpile</h3>
+                    </main>
+                </div>
+            )
         }
     }
 }

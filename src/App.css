@@ -13,6 +13,19 @@ html {
     color: #222;
 }
 
+.chartjs-render-monitor {
+  height: 50vh;
+}
+
+.errorMsg {
+    background: #B00020;color: #fff;padding: 12px;
+}
+
+.errorMsg p {
+    font-size: 15px;
+    line-height: 2.5;
+}
+
 h1 {
     font-size: 8em;
     font-weight: 100;

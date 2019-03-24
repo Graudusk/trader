@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import ButtonAppBar from './ButtonAppBar.js';
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import LineChart from './LineChart.js';
 
-var now = new Date().getTime();
+// var now = new Date().getTime();
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -84,7 +84,7 @@ class Home extends Component {
             console.log(websocket);
             console.log("Websocket is now closed.");
         };*/
-        let that = this;
+        // let that = this;
         fetch("http://localhost:1338")
             // fetch("https://trader-api.graudusk.me")
             .then(function(response) {

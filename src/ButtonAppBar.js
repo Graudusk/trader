@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SimpleMenu from './SimpleMenu.js';
 
@@ -30,7 +30,7 @@ function ButtonAppBar(props) {
         window.location = "/";
     }
 
-    const email = localStorage.getItem("email") ? localStorage.getItem("email") : null
+    // const email = localStorage.getItem("email") ? localStorage.getItem("email") : null
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : null
     const { classes } = props;
     // let loginBtn = <Link to="/login">Login</Link>;

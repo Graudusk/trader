@@ -2,7 +2,8 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 const options = {
-    datasetKeyProvider: "id"
+    datasetKeyProvider: "id",
+    maintainAspectRatio: false    // Don't maintain w/h ratio
 };
 const initialState = {
     websocket: null,
@@ -180,7 +181,7 @@ class LineChart extends React.Component {
             ('0' + d.getUTCMinutes()).slice(-2) + ':' + ('0' + d.getUTCSeconds()).slice(-2);
 
             let result = JSON.parse(event.data);
-            if (that.state.labels.length == 0) {
+            if (that.state.labels.length === 0) {
                 for (let item of result) {
                     that.state.history.push([]);
                 }

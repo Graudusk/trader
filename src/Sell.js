@@ -4,13 +4,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import InfoIcon from '@material-ui/icons/Info';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import StorageIcon from '@material-ui/icons/Storage';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
 
@@ -57,6 +53,50 @@ class Items extends Component {
                     message: result.description,
                     item: result.data
                 });
+                let websocket = new WebSocket('ws://localhost:1338', 'json');
+                console.log("Connecting to: ws://localhost:1338");
+                // websocket = new WebSocket(url.value);
+
+                websocket.onopen = function() {
+                    console.log("The websocket is now open.");
+                    console.log(websocket);
+                    console.log("The websocket is now open.");
+                };
+
+                websocket.onmessage = function(event) {
+                    if (that.state.close) {
+                        websocket.close();
+                        return; 
+                    }
+                    let result = JSON.parse(event.data);
+                    for (let item of result) {
+                        if (parseInt(item.id) === parseInt(that.state.id)) {
+                            let tempItem = that.state.item;
+
+                            tempItem.price = item.price;
+
+                            that.setState({
+                                item: tempItem
+                            });
+                            return;
+                        }
+                    }
+                }
+
+                websocket.onclose = function() {
+                    console.log("The websocket is now closed.");
+                    console.log(websocket);
+                    console.log("Websocket is now closed.");
+                };
+
+                websocket.onerror = function() {
+                    websocket.close();
+                }
+
+                that.setState({
+                    message: result.description,
+                    item: result.data
+                });
                 // console.log(listItems)
             });
     }
@@ -65,6 +105,7 @@ class Items extends Component {
         let that = this;
         let itemData = {
             id: that.state.id,
+            price: that.state.item.price,
             user: window.localStorage.getItem("user")
         };
 

@@ -4,13 +4,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import InfoIcon from '@material-ui/icons/Info';
 import BusinessCenter from '@material-ui/icons/BusinessCenter';
 import StorageIcon from '@material-ui/icons/Storage';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
 
@@ -18,7 +16,7 @@ class Items extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: "",
+            error: "",
             item: {},
             id: props.match.params.id,
             quantity: 0
@@ -70,7 +68,7 @@ class Items extends Component {
                 }
                 let result = JSON.parse(event.data);
                 for (let item of result) {
-                    if (parseInt(item.id) == parseInt(that.state.id)) {
+                    if (parseInt(item.id) === parseInt(that.state.id)) {
                         let tempItem = that.state.item;
 
                         tempItem.price = item.price;
@@ -134,12 +132,17 @@ class Items extends Component {
                     //     [token]: result.data.user.token
                     // });
                     // router.go('/');
-                    // if (result.status == 200) {
+                    console.log(result)
+                    if (result.errors === undefined) {
                     // that.$router.push('/');
 
                     that.props.history.push('/items');
                     // that.forceUpdate()
-                    // }
+                    } else {
+                        that.setState({
+                            error: result.errors.detail
+                        })
+                    }
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -148,9 +151,16 @@ class Items extends Component {
     }
 
     render() {
+        console.log(this.state.error)
         return (
       <div>
             <ButtonAppBar site="Item details" />
+                {this.state.error !== '' && (
+                    <div class="errorMsg">
+                        <p>Error:</p>
+                        <p>{this.state.error}</p>
+                    </div>
+                )}
             <main>
                 <h2>{this.state.item.name}</h2>
                 <List>

@@ -86,8 +86,8 @@ class Items extends Component {
 
                 websocket.onclose = function() {
                     console.log("The websocket is now closed.");
-                    console.log(websocket);
-                    console.log("Websocket is now closed.");
+                    // console.log(websocket);
+                    // console.log("Websocket is now closed.");
                 };
 
                 websocket.onerror = function() {

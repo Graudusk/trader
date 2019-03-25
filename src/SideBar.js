@@ -31,115 +31,116 @@ const styles = {
 };
 
 class SideBar extends React.Component {
-        state = {
-            top: false,
-            left: false,
-            bottom: false,
-            right: false,
-        };
+    state = {
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    };
 
-        toggleDrawer = (side, open) => () => {
-            this.setState({
-                [side]: open,
-            });
-        };
+    toggleDrawer = (side, open) => () => {
+        this.setState({
+            [side]: open,
+        });
+    };
 
 
-        doLogout = () => {
-            console.log("logout")
-            window.localStorage.clear();
-            window.location = "/";
-        }
+    doLogout = () => {
+        console.log("logout")
+        window.localStorage.clear();
+        window.location = "/";
+    }
 
-        get_gravatar = (s = 25) => {
-            let url;
-            let email = localStorage.getItem("email") ? localStorage.getItem("email") : 'null';
-            let usermail = email;
+    get_gravatar = (s = 25) => {
+        let url;
+        let email = localStorage.getItem("email") ? localStorage.getItem("email") : 'null';
+        let usermail = email;
 
-            url = 'https://www.gravatar.com/avatar/';
-            url += md5.md5(usermail);
-            url += "?s=" + s + "&d=identicon&r=g";
+        url = 'https://www.gravatar.com/avatar/';
+        url += md5.md5(usermail);
+        url += "?s=" + s + "&d=identicon&r=g";
 
-            return url;
-        }
+        return url;
+    }
 
-        render() {
-            const token = localStorage.getItem("token") ? localStorage.getItem("token") : null
-            const email = localStorage.getItem("email") ? localStorage.getItem("email") : 'null';
-            const { classes } = this.props;
-            let user;
-            // let userImage = <img class="gravatar" src={this.get_gravatar({email})} />
-            if (token === null) {
+    render() {
+        const token = localStorage.getItem("token") ? localStorage.getItem("token") : null
+        const email = localStorage.getItem("email") ? localStorage.getItem("email") : 'null';
+        const { classes } = this.props;
+        let user;
 
-                user = <ListItem button component={Link} key="login"  to="/login">
+        if (token === null) {
+
+            user = <ListItem button component={Link} key="login"  to="/login">
                         <ListItemIcon><LockIcon /></ListItemIcon>
                         <ListItemText primary="Login" />
                     </ListItem>
-                    // user = <Button href="/login" color="inherit">Login</Button>;
-            } else {
+        } else {
 
-                user = <ListItem button component={Link} key="logout" onClick={this.doLogout}>
+            user = <ListItem button component={Link} key="logout" onClick={this.doLogout}>
                         <ListItemIcon><LockOpenIcon /></ListItemIcon>
                         <ListItemText primary="Logout" />
                     </ListItem>
-            }
-            const sideList = (
-                <div className={classes.list}>
-                    <List>
-                        <ListItem key="logout">
-                            <ListItemIcon><PersonOutlineIcon /></ListItemIcon>
-                            <ListItemText primary={email} />
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem button component={Link} key="home" to="/">
-                          <ListItemIcon><HomeIcon /></ListItemIcon>
-                          <ListItemText primary="Home" />
-                        </ListItem>
-                        {token !== null && (
-                          <ListItem button component={Link} key="items" to="/items">
-                            <ListItemIcon><StorageIcon /></ListItemIcon>
-                            <ListItemText primary="Items" />
-                          </ListItem>
-                        )}
-                        {token !== null && (
-                        <ListItem button component={Link} key="stockpile" to="/stockpile">
-                          <ListItemIcon><StorageIcon /></ListItemIcon>
-                          <ListItemText primary="Stockpile" />
-                        </ListItem>
-                        )}
-                    </List>
-                    <Divider />
-                    <List>
-                        {user}
-                    </List>
-                </div>
-            );
-
-            return (
-                <div>
-                    <IconButton
-                        onClick={this.toggleDrawer('left', true)}
-                        color="inherit"
-                        aria-label="Menu"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-            <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+        }
+        const sideList = (
+            <div className={classes.list}>
                 {token !== null && (
-                    <img alt="gravatar" className={classes.img} src={this.get_gravatar("500")} />
+                <List>
+                    <ListItem key="logout">
+                        <ListItemIcon><PersonOutlineIcon /></ListItemIcon>
+                        <ListItemText primary={email} />
+                    </ListItem>
+                </List>
+                <Divider />
+                )}
+                <List>
+                    <ListItem button component={Link} key="home" to="/">
+                      <ListItemIcon><HomeIcon /></ListItemIcon>
+                      <ListItemText primary="Home" />
+                    </ListItem>
+                    {token !== null && (
+                      <ListItem button component={Link} key="items" to="/items">
+                        <ListItemIcon><StorageIcon /></ListItemIcon>
+                        <ListItemText primary="Items" />
+                      </ListItem>
                     )}
-              <div
-                tabIndex={0}
-                role="button"
-                onClick={this.toggleDrawer('left', false)}
-                onKeyDown={this.toggleDrawer('left', false)}
-              >
-                {sideList}
-              </div>
-            </Drawer>
-          </div>
+                    {token !== null && (
+                    <ListItem button component={Link} key="stockpile" to="/stockpile">
+                      <ListItemIcon><StorageIcon /></ListItemIcon>
+                      <ListItemText primary="Stockpile" />
+                    </ListItem>
+                    )}
+                </List>
+                <Divider />
+                <List>
+                    {user}
+                </List>
+            </div>
+        );
+
+        return (
+            <div>
+                <IconButton
+                    onClick={this.toggleDrawer('left', true)}
+                    color="inherit"
+                    aria-label="Menu"
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                    {token !== null && (
+                        <img alt="gravatar" className={classes.img} src={this.get_gravatar("500")} />
+                    )}
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        onClick={this.toggleDrawer('left', false)}
+                        onKeyDown={this.toggleDrawer('left', false)}
+                    >
+                        {sideList}
+                    </div>
+                </Drawer>
+            </div>
         );
     }
 }

@@ -26,7 +26,9 @@ const styles = {
     },
     img: {
         width: '100%',
-        height: '200px'
+        height: '200px',
+        backgroundPosition: 'center center',
+        backgroundSize: 'contain'
     }
 };
 
@@ -68,6 +70,8 @@ class SideBar extends React.Component {
         const email = localStorage.getItem("email") ? localStorage.getItem("email") : 'null';
         const { classes } = this.props;
         let user;
+        let gravatarimg = this.get_gravatar("500");
+        // classes.img.backgroundImage = gravatarimg;
 
         if (token === null) {
 
@@ -129,7 +133,8 @@ class SideBar extends React.Component {
                 </IconButton>
                 <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                     {token !== null && (
-                        <img alt="gravatar" className={classes.img} src={this.get_gravatar("500")} />
+                        <div style={{backgroundImage: "url(" + gravatarimg + ")"}} className={classes.img}>
+                        </div>
                     )}
                     <div
                         tabIndex={0}

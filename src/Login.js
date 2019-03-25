@@ -88,45 +88,31 @@ class Login extends Component {
                 )}
             <main>
             <form onSubmit={this.handleSubmit}>
-                {/*<label>
-                    Email:
-                    <input type="email" value={this.state.email} onChange={this.handleInputChange} name="email" />
-                </label>*/}
-
-
                 <TextField
                     id="standard-email-input"
                     label="Email"
                     type="email"
                     name="email"
-                    // autoComplete="current-email"
                     margin="normal"
                     onChange={this.handleInputChange}
                     fullWidth={true}
                     value={this.state.email}
                 />
 
-
                 <TextField
                     id="standard-password-input"
                     label="Password"
                     type="password"
                     name="password"
-                    // autoComplete="current-password"
                     margin="normal"
                     onChange={this.handleInputChange}
                     value={this.state.password}
                     fullWidth={true}
                 />
-                {/*<label>
-                    Password:
-                    <input type="password" value={this.state.password} onChange={this.handleInputChange} name="password" />
-                </label>*/}
                 <br />
                 <Button type="submit" variant="contained" color="primary">
                   Login
                 </Button>
-                {/*<input type="submit" value="Submit" />*/}
             </form>
         </main>
         </div>

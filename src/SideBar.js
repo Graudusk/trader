@@ -85,13 +85,13 @@ class SideBar extends React.Component {
         const sideList = (
             <div className={classes.list}>
                 {token !== null && (
-                <List>
-                    <ListItem key="logout">
-                        <ListItemIcon><PersonOutlineIcon /></ListItemIcon>
-                        <ListItemText primary={email} />
-                    </ListItem>
-                </List>
-                <Divider />
+                    <List>
+                        <ListItem>
+                            <ListItemIcon><PersonOutlineIcon /></ListItemIcon>
+                            <ListItemText primary={email} />
+                        </ListItem>
+                    <Divider />
+                    </List>
                 )}
                 <List>
                     <ListItem button component={Link} key="home" to="/">

@@ -7,5 +7,5 @@ npm install
 npm start
 ```
 
-#Backend
+# Backend
 [Trader-api](https://github.com/Graudusk/trader-api/)

@@ -23,7 +23,7 @@ class Login extends Component {
             password: that.state.password
         };
 
-        console.log('A name was submitted: ' + this.state.email);
+        // console.log('A name was submitted: ' + this.state.email);
         this.errors = null;
         if (event) {
             // let formData = new FormData(this.el);
@@ -47,7 +47,6 @@ class Login extends Component {
                     //     [email]: result.data.user.email,
                     //     [token]: result.data.user.token
                     // });
-                    console.log(result)
                     localStorage.setItem('token', result.data.token);
                     localStorage.setItem('email', result.data.user.email);
                     localStorage.setItem('user', result.data.user.id);

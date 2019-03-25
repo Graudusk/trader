@@ -39,7 +39,6 @@ class Items extends Component {
 
     componentDidMount() {
         let that = this;
-        console.log(this.props)
 
         fetch(url + "item/details/" + this.state.id, {
                 headers: {
@@ -52,7 +51,6 @@ class Items extends Component {
                 return response.json();
             })
             .then(function(result) {
-                console.log(result)
                 that.setState({
                     message: result.description,
                     item: result.data
@@ -69,7 +67,6 @@ class Items extends Component {
             quantity: that.state.quantity
         };
 
-        console.log('A name was submitted: ' + this.state.email);
         this.errors = null;
         if (event) {
             // let formData = new FormData(this.el);

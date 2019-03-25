@@ -43,7 +43,6 @@ class Items extends Component {
 
     componentDidMount() {
         let that = this;
-        console.log(this.props)
 
         fetch(url + "user/" + window.localStorage.getItem('user'), {
                 headers: {
@@ -56,7 +55,6 @@ class Items extends Component {
                 return response.json();
             })
             .then(function(result) {
-                console.log(result)
                 that.setState({
                     user: result.data
                 });
@@ -70,7 +68,6 @@ class Items extends Component {
             id: this.state.user.id,
             balance: that.state.amount
         };
-        console.log(userData)
 
         this.errors = null;
         if (event) {

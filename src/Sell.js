@@ -50,7 +50,6 @@ class Items extends Component {
                 return response.json();
             })
             .then(function(result) {
-                console.log(result)
                 that.setState({
                     message: result.description,
                     item: result.data
@@ -61,8 +60,8 @@ class Items extends Component {
 
                 websocket.onopen = function() {
                     console.log("The websocket is now open.");
-                    console.log(websocket);
-                    console.log("The websocket is now open.");
+                    // console.log(websocket);
+                    // console.log("The websocket is now open.");
                 };
 
                 websocket.onmessage = function(event) {

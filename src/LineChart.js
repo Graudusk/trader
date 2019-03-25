@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
+// const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
 const wss = window.location.hostname === 'localhost' ? "ws://localhost:1338/" : "wss://trader-api.graudusk.me/";
 
 const options = {
@@ -154,6 +154,9 @@ class LineChart extends React.Component {
     componentWillUnmount() {
         console.log("closing")
         this.state.close = true;
+        // this.setState({
+        //     close: true
+        // })
         // if(this.state.websocket) this.state.websocket.close();
     }
 
@@ -165,8 +168,8 @@ class LineChart extends React.Component {
 
         websocket.onopen = function() {
             console.log("The websocket is now open.");
-            console.log(websocket);
-            console.log("The websocket is now open.");
+            // console.log(websocket);
+            // console.log("The websocket is now open.");
         };
 
         websocket.onmessage = function(event) {
@@ -176,7 +179,6 @@ class LineChart extends React.Component {
             }
             console.log("Receiving stock prices");
             // console.log(event.data);
-            console.log(that.state)
 
             let d = new Date();
             let time = ('0' + d.getUTCHours()).slice(-2) + ':' +
@@ -184,7 +186,7 @@ class LineChart extends React.Component {
 
             let result = JSON.parse(event.data);
             if (that.state.labels.length === 0) {
-                for (let item of result) {
+                for (let _i in result) {
                     that.state.history.push([]);
                 }
             }
@@ -211,7 +213,6 @@ class LineChart extends React.Component {
                 tempDataSets.push(newDataSet);
             }
 
-            console.log(that.state.history)
 
             var newState = {
                 ...initialState,
@@ -219,39 +220,12 @@ class LineChart extends React.Component {
             };
 
             that.setState(newState);
-
-
-            /*history.push(result[0].price);
-
-
-            var oldDataSet = that.state.datasets[0];
-            var newData = [];
-
-            for(var x=0; x< that.state.labels.length; x++){
-                // newData.push(Math.floor(Math.random() * 100));
-                newData.push(history[x]);
-            }
-
-            var newDataSet = {
-                ...oldDataSet
-            };
-
-            newDataSet.data = newData;
-
-            var newState = {
-                ...initialState,
-                datasets: [newDataSet]
-            };
-
-            that.setState(newState);*/
-
-            console.log(that.state.history);
         }
 
         websocket.onclose = function() {
             console.log("The websocket is now closed.");
-            console.log(websocket);
-            console.log("Websocket is now closed.");
+            // console.log(websocket);
+            // console.log("Websocket is now closed.");
         };
 
         websocket.onerror = function() {

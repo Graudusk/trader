@@ -56,8 +56,8 @@ class Items extends Component {
 
                 websocket.onopen = function() {
                     console.log("The websocket is now open.");
-                    console.log(websocket);
-                    console.log("The websocket is now open.");
+                    // console.log(websocket);
+                    // console.log("The websocket is now open.");
                 };
 
                 websocket.onmessage = function(event) {
@@ -70,7 +70,7 @@ class Items extends Component {
                     let tempData = that.state.itemData;
                     for (let item of result) {
                         for (let i in tempData) {
-                            console.log(tempData, item)
+                            // console.log(tempData, item)
                             if (tempData[i].name === item.name) {
                                 tempData[i].price = item.price;
                             }
@@ -98,45 +98,14 @@ class Items extends Component {
 
                 websocket.onclose = function() {
                     console.log("The websocket is now closed.");
-                    console.log(websocket);
-                    console.log("Websocket is now closed.");
+                    // console.log(websocket);
+                    // console.log("Websocket is now closed.");
                 };
 
                 websocket.onerror = function() {
                     websocket.close();
                 }
             });
-        console.log(this.props)
-
-       /* fetch("http://localhost:1338/user/stockpile/" + window.localStorage.getItem("user"), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': window.localStorage.getItem('token')
-                }
-            })
-            // fetch("https://trader-api.graudusk.me")
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(result) {
-                console.log(result)
-                let listItems = result.data.map((item) =>
-                    <ListItem key={item.id} button>
-
-                        <IconButton href={"/item/sell/" +  + item.id} key={item.id} color="inherit" aria-label="Menu">
-                            <MonetizationOnIcon  fontSize="large"/>
-                        </IconButton>
-                        <Link to={"/item/details/" + item.itemId    }>
-                            <ListItemText inset={false} primary={item.name + ", " + item.quantity + " pcs."} secondary={item.price + " SEK"} />
-                        </Link>
-                    </ListItem>
-                );
-                that.setState({
-                    itemsList: listItems,
-                    user: window.localStorage.getItem('email')
-                });
-                console.log(listItems);
-            });*/
     }
 
     sellItem(event) {
@@ -147,7 +116,6 @@ class Items extends Component {
             quantity: that.state.quantity
         };
 
-        console.log('A name was submitted: ' + this.state.email);
         this.errors = null;
         if (event) {
             fetch(url + "item/buy", {

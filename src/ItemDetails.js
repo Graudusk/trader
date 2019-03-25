@@ -59,8 +59,8 @@ class Items extends Component {
 
             websocket.onopen = function() {
                 console.log("The websocket is now open.");
-                console.log(websocket);
-                console.log("The websocket is now open.");
+                // console.log(websocket);
+                // console.log("The websocket is now open.");
             };
 
             websocket.onmessage = function(event) {
@@ -85,8 +85,8 @@ class Items extends Component {
 
             websocket.onclose = function() {
                 console.log("The websocket is now closed.");
-                console.log(websocket);
-                console.log("Websocket is now closed.");
+                // console.log(websocket);
+                // console.log("Websocket is now closed.");
             };
 
             websocket.onerror = function() {
@@ -134,7 +134,6 @@ class Items extends Component {
                     //     [token]: result.data.user.token
                     // });
                     // router.go('/');
-                    console.log(result)
                     if (result.errors === undefined) {
                     // that.$router.push('/');
 
@@ -153,7 +152,6 @@ class Items extends Component {
     }
 
     render() {
-        console.log(this.state.error)
         return (
       <div>
             <ButtonAppBar site="Item details" />

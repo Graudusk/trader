@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import StorageIcon from '@material-ui/icons/Storage';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockIcon from '@material-ui/icons/Lock';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
@@ -104,7 +105,7 @@ class SideBar extends React.Component {
                     </ListItem>
                     {token !== null && (
                       <ListItem button component={Link} key="items" to="/items">
-                        <ListItemIcon><StorageIcon /></ListItemIcon>
+                        <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
                         <ListItemText primary="Items" />
                       </ListItem>
                     )}

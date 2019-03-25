@@ -58,7 +58,7 @@ function ButtonAppBar(props) {
     } else {
         user = <div>
             <IconButton href="/user" className={classes.menuButton} color="inherit" aria-label="Menu">
-              <img alt="gravatar" class="gravatar" src={get_gravatar({email})} />
+              <img alt="gravatar" className="gravatar" src={get_gravatar({email})} />
               {/*<AccountCircleIcon />*/}
             </IconButton>
             <Button onClick={doLogout} color="inherit">Logout</Button>

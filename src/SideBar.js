@@ -75,13 +75,13 @@ class SideBar extends React.Component {
 
         if (token === null) {
 
-            user = <ListItem button component={Link} key="login"  to="/login">
+            user = <ListItem button component={Link} key="login" to="/login">
                         <ListItemIcon><LockIcon /></ListItemIcon>
                         <ListItemText primary="Login" />
                     </ListItem>
         } else {
 
-            user = <ListItem button component={Link} key="logout" onClick={this.doLogout}>
+            user = <ListItem button key="logout" onClick={this.doLogout}>
                         <ListItemIcon><LockOpenIcon /></ListItemIcon>
                         <ListItemText primary="Logout" />
                     </ListItem>

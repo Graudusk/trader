@@ -36,26 +36,6 @@ class App extends Component {
         return (
             <Router>
         <div className="App">
-          {/*<nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                {this.state.token === null && (
-                <li>{loginBtn}</li>
-                )}
-                {this.state.email !== null && (
-                    <li><Link to="/user">{this.state.email}</Link></li>
-                )}
-                {this.state.token !== null && (
-                <li><Link to="/items">Items</Link></li>
-                )}
-                {this.state.token !== null && (
-                <li><Link to="/stockpile">Stockpile</Link></li>
-                )}
-                {this.state.token !== null && (
-                <li>{logoutBtn}</li>
-                )}
-            </ul>
-          </nav>*/}
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/items" component={Items} />

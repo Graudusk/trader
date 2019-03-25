@@ -13,6 +13,10 @@ html {
     color: #222;
 }
 
+img.gravatar {
+    border-radius: 100%;
+}
+
 .chartjs-render-monitor {
   height: 50vh;
 }

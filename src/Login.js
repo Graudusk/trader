@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import ButtonAppBar from './ButtonAppBar.js';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
 
 class Login extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Login extends Component {
         if (event) {
             // let formData = new FormData(this.el);
             // console.log(userData);
-            fetch("http://localhost:1338/login", {
+            fetch(url + "login", {
             // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {

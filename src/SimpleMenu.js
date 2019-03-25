@@ -6,7 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
-
 class SimpleMenu extends React.Component {
   state = {
     anchorEl: null,

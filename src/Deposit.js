@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
 
 class Items extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class Items extends Component {
         let that = this;
         console.log(this.props)
 
-        fetch("http://localhost:1338/item/details/" + this.state.id, {
+        fetch(url + "item/details/" + this.state.id, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': window.localStorage.getItem('token')
@@ -73,7 +74,7 @@ class Items extends Component {
         if (event) {
             // let formData = new FormData(this.el);
             // console.log(userData);
-            fetch("http://localhost:1338/item/buy", {
+            fetch(url + "item/buy", {
             // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {

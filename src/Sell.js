@@ -9,6 +9,8 @@ import StorageIcon from '@material-ui/icons/Storage';
 import Button from '@material-ui/core/Button';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
+const wss = window.location.hostname === 'localhost' ? "ws://localhost:1338/" : "wss://trader-api.graudusk.me/";
 
 class Items extends Component {
     constructor(props) {
@@ -37,7 +39,7 @@ class Items extends Component {
     componentDidMount() {
         let that = this;
 
-        fetch("http://localhost:1338/user/stockpile/item/" + this.state.id + "/" + window.localStorage.getItem('user'), {
+        fetch(url + "user/stockpile/item/" + this.state.id + "/" + window.localStorage.getItem('user'), {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': window.localStorage.getItem('token')
@@ -53,8 +55,8 @@ class Items extends Component {
                     message: result.description,
                     item: result.data
                 });
-                let websocket = new WebSocket('ws://localhost:1338', 'json');
-                console.log("Connecting to: ws://localhost:1338");
+                let websocket = new WebSocket(wss, 'json');
+                console.log("Connecting to: " + wss);
                 // websocket = new WebSocket(url.value);
 
                 websocket.onopen = function() {
@@ -113,7 +115,7 @@ class Items extends Component {
         if (event) {
             // let formData = new FormData(this.el);
             // console.log(itemData);
-            fetch("http://localhost:1338/item/sell", {
+            fetch(url + "item/sell", {
             // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {

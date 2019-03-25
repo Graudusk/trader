@@ -1,5 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
+const wss = window.location.hostname === 'localhost' ? "ws://localhost:1338/" : "wss://trader-api.graudusk.me/";
 
 const options = {
     datasetKeyProvider: "id",
@@ -157,8 +159,8 @@ class LineChart extends React.Component {
 
     componentDidMount() {
         var that = this;
-        let websocket = new WebSocket('ws://localhost:1338', 'json');
-        console.log("Connecting to: ws://localhost:1338");
+        let websocket = new WebSocket(wss, 'json');
+        console.log("Connecting to: " + wss);
         // websocket = new WebSocket(url.value);
 
         websocket.onopen = function() {

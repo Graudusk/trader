@@ -16,6 +16,7 @@ import Fab from '@material-ui/core/Fab';
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import ButtonAppBar from './ButtonAppBar.js';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
 
 class Items extends Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class Items extends Component {
         let that = this;
         console.log(this.props)
 
-        fetch("http://localhost:1338/user/" + window.localStorage.getItem('user'), {
+        fetch(url + "user/" + window.localStorage.getItem('user'), {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': window.localStorage.getItem('token')
@@ -75,7 +76,7 @@ class Items extends Component {
         if (event) {
             // let formData = new FormData(this.el);
             // console.log(userData);
-            fetch("http://localhost:1338/balance", {
+            fetch(url + "balance", {
                     // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {

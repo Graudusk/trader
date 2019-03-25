@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 // import ListItemText from '@material-ui/core/ListItemText';
 // import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import LineChart from './LineChart.js';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
 
 // var now = new Date().getTime();
 class Home extends Component {
@@ -85,7 +86,7 @@ class Home extends Component {
             console.log("Websocket is now closed.");
         };*/
         // let that = this;
-        fetch("http://localhost:1338")
+        fetch(url)
             // fetch("https://trader-api.graudusk.me")
             .then(function(response) {
                 return response.json();

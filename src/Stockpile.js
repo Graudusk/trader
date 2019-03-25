@@ -6,6 +6,8 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import ButtonAppBar from './ButtonAppBar.js';
 import IconButton from '@material-ui/core/IconButton';
+const url = window.location.hostname === 'localhost' ? "http://localhost:1338/" : "https://trader-api.graudusk.me/";
+const wss = window.location.hostname === 'localhost' ? "ws://localhost:1338/" : "wss://trader-api.graudusk.me/";
 // import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 
 class Items extends Component {
@@ -35,7 +37,7 @@ class Items extends Component {
         let that = this;
 
         // fetch("http://localhost:1338/item/all", {
-        fetch("http://localhost:1338/user/stockpile/" + window.localStorage.getItem("user"), {
+        fetch(url + "user/stockpile/" + window.localStorage.getItem("user"), {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-access-token': window.localStorage.getItem('token')
@@ -49,8 +51,8 @@ class Items extends Component {
                 that.setState({
                     itemData: result.data
                 });
-                let websocket = new WebSocket('ws://localhost:1338', 'json');
-                console.log("Connecting to: ws://localhost:1338");
+                let websocket = new WebSocket(wss, 'json');
+                console.log("Connecting to: " + wss);
 
                 websocket.onopen = function() {
                     console.log("The websocket is now open.");
@@ -148,7 +150,7 @@ class Items extends Component {
         console.log('A name was submitted: ' + this.state.email);
         this.errors = null;
         if (event) {
-            fetch("http://localhost:1338/item/buy", {
+            fetch(url + "item/buy", {
             // fetch('https://trader-api.graudusk.me/login', {
                     // fetch('http://localhost:1337/login', {
                     headers: {

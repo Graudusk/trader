@@ -8,6 +8,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            error: "",
             email: '',
             password: ''
         };
@@ -43,21 +44,17 @@ class Login extends Component {
                     return response.json();
                 })
                 .then(function(result) {
-                    // this.setState({
-                    //     [email]: result.data.user.email,
-                    //     [token]: result.data.user.token
-                    // });
-                    localStorage.setItem('token', result.data.token);
-                    localStorage.setItem('email', result.data.user.email);
-                    localStorage.setItem('user', result.data.user.id);
-                    // router.go('/');
-                    // if (result.status == 200) {
-                    // that.$router.push('/');
-                    window.location = "/";
+                    if (result.errors === undefined) {
 
-                    // that.props.history.push('/');
-                    // that.forceUpdate()
-                    // }
+                        localStorage.setItem('token', result.data.token);
+                        localStorage.setItem('email', result.data.user.email);
+                        localStorage.setItem('user', result.data.user.id);
+                        window.location = "/";
+                    } else {
+                        that.setState({
+                            error: result.errors.detail
+                        })
+                    }
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -83,6 +80,12 @@ class Login extends Component {
         return (
       <div>
             <ButtonAppBar site="Login" />
+                {this.state.error !== '' && (
+                    <div class="errorMsg">
+                        <p>Error:</p>
+                        <p>{this.state.error}</p>
+                    </div>
+                )}
             <main>
             <form onSubmit={this.handleSubmit}>
                 {/*<label>
